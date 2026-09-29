@@ -50,9 +50,10 @@ More ways to capture, all without pausing:
 - Listen to video: press Alt+L to let Kayt listen continuously, so a Snip or a range
   can reach back further than a single press would. A range (Alt+R) is transcribed
   too: Kayt fills it with everything said from its start to its end.
-- Optional audio: turn on "Keep audio" in Settings and Kayt keeps a short recording
-  of your microphone alongside voice notes. Stored only in this browser, never
-  uploaded; deleted with the note or with "Clear all data". Off any time you like.
+- Hear your voice notes again: Kayt can keep the recording of each voice note so you
+  can play it back. Stored only in this browser, never uploaded; deleted with the
+  note or with "Clear all data". Turn it off in Settings any time. The video's own
+  sound is never recorded — Snips and ranges keep words only.
 
 All your notes live in the side panel (click the Kayt toolbar icon), and a full
 "Manage notes" page lets you filter, select many notes at once, and copy, export or
@@ -74,8 +75,8 @@ note, through the Obsidian app on your computer — nothing is uploaded.
 
 You can change the keyboard shortcuts at any time at chrome://extensions/shortcuts.
 
-Privacy: your notes — and, if you choose to keep them, audio recordings of your voice
-notes — are stored only in this browser, on this computer. There's no account, no
+Privacy: your notes — and, if you choose to keep them, the recordings of your own
+voice notes — are stored only in this browser, on this computer. There's no account, no
 backend, and no cloud sync. The only network request Kayt makes is a lookup to
 YouTube's own oEmbed service to fetch a video's title and channel name (which sends
 only the video ID), plus loading thumbnail images directly from YouTube. No analytics,
@@ -105,9 +106,10 @@ block ads, download video, or interact with any other site.
 ## Permission justifications
 
 **storage**
-Required to save the user's notes and video metadata (title, channel, thumbnail URL)
-locally with `chrome.storage.local`. This is the only place any Kayt data is
-kept.
+Required to save the user's notes, settings and video metadata (title, channel,
+thumbnail URL) locally with `chrome.storage.local`. Recordings of the user's own voice
+notes, if they choose to keep them, are stored in the extension's local IndexedDB.
+Nothing is kept anywhere else.
 
 **sidePanel**
 Required to show the notes library and per-video notes list in Chrome's built-in side
@@ -119,23 +121,25 @@ range (Alt+R) on a YouTube tab, to hear that tab's sound and turn the video's sp
 into text with Chrome's on-device speech recognition, so the user can save a Snip or
 range as a note. Only that one tab, only while listening is on (shown by a bar on the
 page and Chrome's own indicator) — a Snip or range that needs listening turns it on
-for just that Snip or range if it wasn't already on. If the user's "Keep audio"
-setting is on, a short recording of the tab's sound covering the same stretch as the
-note is also kept, stored locally and never sent anywhere; with "Keep audio" off,
-only text is kept.
+for just that Snip or range if it wasn't already on. The tab's sound is never
+recorded or saved: only the recognised words are kept, in memory, and only the words
+of a Snip or range the user saves become part of a note.
 
 **offscreen**
 Chrome's extension service worker cannot use a microphone or tab audio, so a hidden
 extension page (an offscreen document) runs the on-device speech recognition for
-voice notes, Snip and "Listen to video", and — only when the user's "Keep audio"
-setting is on — records the matching microphone or tab audio alongside the
-transcription. It is created only while one of these is in use.
+voice notes, Snip and "Listen to video". For voice notes only, and only if the user
+keeps voice recordings (a Settings option), it also records the user's own microphone
+for that note. It never records the tab's sound. It is created only while one of
+these is in use.
 
 **Host permission: `https://www.youtube.com/*` and `https://m.youtube.com/*`**
 Required so the content script can run on YouTube's watch pages to read the current
 video ID from the page address and the current playback position from the page's
-video element — but only at the instant the user presses the shortcut or clicks the
-toolbar button — and to draw the small note-capture box on top of the page. The
+video element — when the user adds a note, and about once a second only while a range
+or Snip is in progress or the side panel is showing that video's notes — and to draw
+the Kayt button and note box on top of the page. Also used to look up a video's
+title and channel from YouTube's public oEmbed endpoint. The
 extension does not request broader host access (no `<all_urls>`, no `tabs`, no
 `downloads`, no `history`); it cannot see or act on any site other than YouTube.
 
@@ -153,10 +157,10 @@ and sent off the user's device to you or a third party." Specifically:
 
 - **Personally identifiable information:** Not collected.
 - **Health info, financial info, authentication info, personal communications, location:** Not collected — the extension has no way to access any of these.
-- **Web history:** Not collected. The extension only reads the current tab's URL, and only on youtube.com/m.youtube.com, and only at the instant the user triggers a capture — it does not log or store browsing history.
+- **Web history:** Not collected. The extension only reads the current tab's URL, and only on youtube.com/m.youtube.com, when the user uses Kayt — it does not log or store browsing history.
 - **User activity (e.g. keystrokes, clicks) outside the extension's own UI:** Not collected.
 - **Website content:** Not collected, beyond reading the current video ID, playback time and chapter name on YouTube pages as described above, which stays on-device.
-- **Audio:** Not collected in the Chrome Web Store's sense — nothing is transmitted off the device. Voice notes, Snip and "Listen to video" turn speech into text on the user's computer with Chrome's on-device speech recognition. If the user's "Keep audio" setting is on (it is on by default, and can be turned off), a short recording of the user's microphone for a voice note is also kept, but only in the browser's local storage on that device, never transmitted or uploaded anywhere.
+- **Audio:** Not collected in the Chrome Web Store's sense — nothing is transmitted off the device. Voice notes, Snip and "Listen to video" turn speech into text on the user's computer with Chrome's on-device speech recognition. If the user keeps voice recordings (a Settings option, on by default), the recording of the user's own microphone for each voice note is also kept, but only in the browser's local storage on that device, never transmitted or uploaded anywhere. The sound of YouTube videos is never recorded.
 
 The only data that leaves the device at all is the YouTube video ID sent to YouTube's
 own public oEmbed endpoint to fetch a title/channel name, and the video ID used to
@@ -171,7 +175,7 @@ data for purposes unrelated to the extension's single purpose.** **This extensio
 does not use or transfer user data to determine creditworthiness or for lending
 purposes.**
 
-Privacy policy URL: link to the hosted `privacy.html` (see "Steps to publish" below).
+Privacy policy URL: https://hashemmk.github.io/kayt-web-ext/privacy.html (GitHub Pages, see "Steps to publish" below).
 
 ## Screenshots to take (1280×800 px)
 
@@ -210,8 +214,8 @@ format.)
 3. **Host the privacy policy.** The Chrome Web Store requires a public URL for the
    privacy policy, and `privacy.html` in this repo is written to be hosted as-is.
    Easiest option, GitHub Pages:
-   - The repository (`github.com/Hashemmk/...` — exact name still to be decided)
-     must be **public** for free GitHub Pages.
+   - The repository (`github.com/Hashemmk/kayt-web-ext`) must be **public** for
+     free GitHub Pages.
    - In the repository, go to **Settings → Pages**.
    - Under "Build and deployment", choose **Deploy from a branch**, branch **main**,
      folder **/ (root)**, then Save.
