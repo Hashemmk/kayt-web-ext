@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kayt</title>
+  <link rel="stylesheet" href="sidepanel.css">
+  <script type="module" src="sidepanel.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button type="button" id="back-button" class="icon-button" aria-label="Back" hidden>&larr;</button>
+    <div class="wordmark">
+      <!-- The Kayt mark, single colour (brand/kayt-mark-mono.svg) -->
+      <svg id="brand-mark" viewBox="0 0 72 72" aria-hidden="true" focusable="false">
+        <rect x="2" y="30" width="8" height="14" rx="4" fill="currentColor"/>
+        <rect x="13" y="17" width="8" height="40" rx="4" fill="currentColor"/>
+        <rect x="24" y="25" width="8" height="24" rx="4" fill="currentColor"/>
+        <rect x="35" y="32" width="8" height="10" rx="4" fill="currentColor"/>
+        <path d="M60.65,12.43 L62.61,10.11 A3.8,3.8 0 0 1 68.43,14.99 L66.47,17.32 Z" fill="currentColor"/>
+        <path d="M58.94,14.47 L64.76,19.36 L52.31,34.2 L46.49,29.32 Z" fill="currentColor"/>
+        <path d="M46.49,29.32 L52.31,34.2 L45.77,37.15 a0.91,0.91 0 0 1 -1.05,-0.88 Z" fill="currentColor"/>
+      </svg>
+      <h1 id="view-title">Kayt</h1>
+    </div>
+    <div class="topbar-actions">
+      <button type="button" id="manage-button" class="icon-button" aria-label="Manage notes" title="Manage notes (opens a full page)">&#9776;</button>
+      <button type="button" id="settings-button" class="icon-button" aria-label="Settings" title="Settings">&#9881;</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Library: every video with notes, most recent first -->
+    <section id="library-view">
+      <input type="search" id="search-input" class="search" placeholder="Search notes and titles" aria-label="Search notes and titles">
+      <p id="library-empty" class="empty" hidden></p>
+      <ul id="library-list" class="library-list"></ul>
+    </section>
+
+    <!-- Notes for one video, in timestamp order -->
+    <section id="video-view" hidden>
+      <div id="video-header" class="video-header"></div>
+      <!-- Review mode: shown while the active tab is playing this video -->
+      <p id="review-status" class="review-status" hidden></p>
+      <ul id="note-list" class="note-list"></ul>
+    </section>
+
+    <section id="settings-view" hidden>
+      <div class="settings-group">
+        <h2>Keyboard shortcuts</h2>
+        <p>Add a note: <kbd id="shortcut-label">Alt+N</kbd></p>
+        <p>Voice note: <kbd id="voice-shortcut-label">Alt+V</kbd></p>
+        <p>Start or end a range: <kbd id="range-shortcut-label">Alt+R</kbd></p>
+        <p>Listen to the video: <kbd id="listen-shortcut-label">Alt+L</kbd></p>
+        <p>Snip: <kbd id="snip-shortcut-label">not set</kbd> — set one at Change shortcuts</p>
+        <p>In the note box, Alt+1 to Alt+4 save Important, Confusing, Revisit or Disagree.</p>
+        <button type="button" id="change-shortcut-button" class="button">Change shortcuts</button>
+      </div>
+
+      <div class="settings-group">
+        <h2>Kayt button on YouTube</h2>
+        <label class="check-row">
+          <input type="checkbox" id="page-button-checkbox">
+          Show the Kayt button in the corner of YouTube videos
+        </label>
+      </div>
+
+      <div class="settings-group">
+        <h2>Voice and listening</h2>
+        <p>Voice notes, Snips and ranges turn speech into text on this computer. If "Keep audio" is on, a voice note also keeps a recording of your voice in this browser — never uploaded. The video's own sound is never recorded. Chrome needs a speech pack for your language, downloaded once.</p>
+        <label class="check-row">Language
+          <select id="speech-lang-select" class="select" aria-label="Speech language"></select>
+        </label>
+        <p id="speech-lang-status" class="speech-status"></p>
+        <button type="button" id="speech-install-button" class="button" hidden>Download speech pack</button>
+        <button type="button" id="mic-permission-button" class="button">Allow microphone</button>
+        <label class="check-row">
+          <input type="checkbox" id="keep-audio-checkbox">
+          Keep a recording of my voice notes
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="voice-auto-stop-checkbox">
+          End a voice note by itself when I pause
+        </label>
+        <p>When off, press Stop or Alt+V to end a voice note.</p>
+        <label class="check-row">
+          <input type="checkbox" id="pause-for-voice-checkbox">
+          Pause the video while I speak a voice note (it plays on afterwards)
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="listen-tip-checkbox">
+          Explain when a Snip or range has to turn listening on
+        </label>
+      </div>
+
+      <div class="settings-group">
+        <h2>Notes: look back</h2>
+        <p>Notes point a little before the moment you press the shortcut, because you usually press it just after the part that mattered. Range ends are not moved.</p>
+        <select id="look-back-select" class="select" aria-label="Seconds to look back for notes"></select>
+      </div>
+
+      <div class="settings-group">
+        <h2>Ranges</h2>
+        <p>A range starts this many seconds before you press Start range (Alt+R). If Kayt was already listening, its transcript starts there too.</p>
+        <select id="range-look-back-select" class="select" aria-label="Seconds to look back for ranges"></select>
+      </div>
+
+      <div class="settings-group">
+        <h2>Snip</h2>
+        <p>A Snip saves what the video said around the moment you press it: some seconds before, and some after, like the Snipd app. If Kayt wasn't listening yet, it can't hear the past, so it records the same total length starting from the press.</p>
+        <label class="check-row">Before
+          <select id="snip-before-select" class="select" aria-label="Seconds before a Snip"></select>
+        </label>
+        <label class="check-row">After
+          <select id="snip-after-select" class="select" aria-label="Seconds after a Snip"></select>
+        </label>
+        <p id="snip-summary" class="hint"></p>
+      </div>
+
+      <div class="settings-group">
+        <h2>Export</h2>
+        <p>Download every note as a Markdown file, in the same format as Kayt for Android.</p>
+        <button type="button" id="export-button" class="button">Export all notes</button>
+      </div>
+
+      <div class="settings-group">
+        <h2>Obsidian</h2>
+        <p>"Send to Obsidian" on a video's notes creates a note in your vault, in the same Markdown as the export. It goes straight to the Obsidian app on this computer; nothing is uploaded. Sending the same video again replaces its note there.</p>
+        <label class="field-row">Vault name
+          <input type="text" id="obsidian-vault-input" class="text-input" placeholder="Leave empty for the vault that's open" spellcheck="false">
+        </label>
+        <label class="field-row">Folder in the vault
+          <input type="text" id="obsidian-folder-input" class="text-input" placeholder="Leave empty for the top level" spellcheck="false">
+        </label>
+      </div>
+
+      <div class="settings-group">
+        <h2>Clear all data</h2>
+        <p>Permanently delete every note from this browser. This cannot be undone.</p>
+        <button type="button" id="clear-button" class="button caution">Clear all data</button>
+        <div id="clear-confirm" class="confirm" hidden>
+          <p><strong>Delete all notes?</strong> Export them first if you want to keep a copy.</p>
+          <button type="button" id="clear-confirm-yes" class="button caution">Yes, delete everything</button>
+          <button type="button" id="clear-confirm-no" class="button">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Only shown when devtools/ is present, i.e. never in the published zip -->
+      <div id="devtools-group" class="settings-group" hidden>
+        <h2>Developer tests</h2>
+        <p>For the owner while building Kayt. Not in the published extension.</p>
+        <button type="button" id="speech-test-button" class="button">Open speech test</button>
+      </div>
+
+      <div class="settings-group">
+        <h2>Privacy</h2>
+        <p>Your notes are stored only in this browser and are never uploaded.</p>
+        <a href="../privacy.html" target="_blank" rel="noopener">Privacy policy</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden>
+    <span id="toast-text"></span>
+    <button type="button" id="toast-undo" class="link-button">Undo</button>
+  </div>
+
+  <!-- Shared player for a note's kept audio (see setUpClipControls in sidepanel.js) -->
+  <audio id="clip-player" hidden></audio>
+</body>
+</html>

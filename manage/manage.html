@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kayt — manage notes</title>
+  <link rel="stylesheet" href="../sidepanel/sidepanel.css">
+  <link rel="stylesheet" href="manage.css">
+  <script type="module" src="manage.js"></script>
+</head>
+<body>
+  <header class="page-header">
+    <div class="page-title">
+      <!-- The Kayt mark, single colour (brand/kayt-mark-mono.svg) -->
+      <svg viewBox="0 0 72 72" aria-hidden="true" focusable="false">
+        <rect x="2" y="30" width="8" height="14" rx="4" fill="currentColor"/>
+        <rect x="13" y="17" width="8" height="40" rx="4" fill="currentColor"/>
+        <rect x="24" y="25" width="8" height="24" rx="4" fill="currentColor"/>
+        <rect x="35" y="32" width="8" height="10" rx="4" fill="currentColor"/>
+        <path d="M60.65,12.43 L62.61,10.11 A3.8,3.8 0 0 1 68.43,14.99 L66.47,17.32 Z" fill="currentColor"/>
+        <path d="M58.94,14.47 L64.76,19.36 L52.31,34.2 L46.49,29.32 Z" fill="currentColor"/>
+        <path d="M46.49,29.32 L52.31,34.2 L45.77,37.15 a0.91,0.91 0 0 1 -1.05,-0.88 Z" fill="currentColor"/>
+      </svg>
+      <h1>Manage notes</h1>
+      <span id="total-count" class="muted"></span>
+    </div>
+
+    <div class="filters">
+      <input type="search" id="search-input" class="search" placeholder="Search notes and titles" aria-label="Search notes and titles">
+      <select id="video-filter" class="select" aria-label="Video"></select>
+      <select id="type-filter" class="select" aria-label="Type of note">
+        <option value="all">All types</option>
+        <option value="TEXT">Typed notes</option>
+        <option value="VOICE">Voice notes</option>
+        <option value="PRESENTER">Snips</option>
+        <option value="RANGE">Ranges</option>
+        <option value="LABEL">Labels (Important, Confusing…)</option>
+        <option value="BOOKMARK">Bookmarks (Marked)</option>
+      </select>
+      <select id="sort-select" class="select" aria-label="Sort">
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+        <option value="video">By video, then time</option>
+      </select>
+    </div>
+
+    <div class="selection-bar">
+      <label class="select-all">
+        <input type="checkbox" id="select-all">
+        <span id="selection-label">Select all shown</span>
+      </label>
+      <div class="selection-actions">
+        <button type="button" id="copy-selected" class="button" disabled>Copy</button>
+        <button type="button" id="export-selected" class="button" disabled>Export</button>
+        <button type="button" id="delete-selected" class="button caution" disabled>Delete</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <p id="empty" class="empty" hidden></p>
+    <ul id="rows" class="rows"></ul>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden>
+    <span id="toast-text"></span>
+    <button type="button" id="toast-undo" class="link-button">Undo</button>
+  </div>
+
+  <!-- Shared player for a note's kept audio (see setUpClipControls in manage.js) -->
+  <audio id="clip-player" hidden></audio>
+</body>
+</html>

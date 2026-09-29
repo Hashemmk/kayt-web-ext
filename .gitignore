@@ -1,0 +1,7 @@
+# Packaged builds for the Chrome Web Store
+*.zip
+
+# OS clutter
+.DS_Store
+Thumbs.db
+

@@ -1,0 +1,523 @@
+/* Kayt side panel. Palette and type from BRAND.md.
+   Jade is reserved: it only ever marks something the user captured (a note's
+   timestamp, the marker star). Saffron flags a note that has no time.
+   The fonts are bundled in fonts/ — nothing is loaded from the network. */
+
+@font-face {
+  font-family: "Public Sans";
+  src: url("../fonts/public-sans-latin.woff2") format("woff2");
+  font-weight: 400 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("../fonts/bricolage-grotesque-latin.woff2") format("woff2");
+  font-weight: 700 800;
+  font-display: swap;
+}
+
+:root {
+  /* Light: Bone background, Ink text, Pine for captured things. */
+  --bg: #f4f1ea;
+  --surface: #fffdf8;
+  --text: #15181c;
+  --muted: #5e6469;
+  --border: #d8d2c4;
+  --captured: #14524b;
+  --flagged: #a86a12;
+  --on-solid: #f4f1ea;
+  --solid: #15181c;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark: Ink background, Bone text, Jade for captured things. */
+    --bg: #15181c;
+    --surface: #1d2126;
+    --text: #f4f1ea;
+    --muted: #a49e93;
+    --border: #2e3339;
+    --captured: #2fb89b;
+    --flagged: #e8a33d;
+    --on-solid: #15181c;
+    --solid: #f4f1ea;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.wordmark svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+.topbar h1 {
+  flex: 1;
+  margin: 0;
+  font-family: "Bricolage Grotesque", "Public Sans", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+main {
+  padding: 12px;
+}
+
+.icon-button {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 17px;
+  color: var(--text);
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background: var(--surface);
+}
+
+.button {
+  padding: 8px 14px;
+  font: inherit;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.button:hover {
+  border-color: var(--muted);
+}
+
+.button.primary {
+  color: var(--on-solid);
+  background: var(--solid);
+  border-color: var(--solid);
+}
+
+.button.caution {
+  color: var(--flagged);
+  border-color: var(--flagged);
+}
+
+.link-button {
+  padding: 2px 4px;
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  color: var(--muted);
+}
+
+a {
+  color: var(--text);
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--muted);
+  outline-offset: 2px;
+}
+
+.search {
+  width: 100%;
+  padding: 9px 11px;
+  margin-bottom: 12px;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+}
+
+.search::placeholder {
+  color: var(--muted);
+}
+
+.empty {
+  color: var(--muted);
+}
+
+/* Library */
+
+.library-list,
+.note-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.library-item {
+  display: flex;
+  gap: 11px;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 4px;
+  font: inherit;
+  text-align: left;
+  color: var(--text);
+  background: none;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.library-item:hover {
+  background: var(--surface);
+}
+
+.thumbnail {
+  flex: none;
+  width: 96px;
+  height: 54px;
+  object-fit: cover;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+}
+
+.thumbnail.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--muted);
+}
+
+.library-text {
+  min-width: 0;
+}
+
+.library-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+.library-meta {
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Video notes */
+
+.video-header {
+  margin-bottom: 12px;
+}
+
+.video-header .channel {
+  color: var(--muted);
+}
+
+.note {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.note-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* The timestamp is the captured thing, so it carries the accent. */
+.timestamp {
+  flex: none;
+  min-width: 56px;
+  padding: 2px 7px;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--captured);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.timestamp:hover {
+  border-color: var(--captured);
+}
+
+.timestamp.none {
+  color: var(--flagged);
+  cursor: default;
+}
+
+.marker {
+  color: var(--captured);
+  font-weight: 600;
+}
+
+.note-text {
+  flex: 1;
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.note-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+  padding-left: 66px;
+  font-size: 12px;
+}
+
+.note-actions .link-button {
+  color: var(--muted);
+}
+
+.note-actions .link-button:hover {
+  color: var(--text);
+}
+
+.edit-area {
+  width: 100%;
+  min-height: 70px;
+  padding: 9px;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  resize: vertical;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* Settings */
+
+.settings-group {
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.settings-group h2 {
+  margin: 0 0 4px;
+  font-family: "Bricolage Grotesque", "Public Sans", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.settings-group p {
+  margin: 0 0 9px;
+  color: var(--muted);
+}
+
+.confirm {
+  margin-top: 10px;
+  padding: 11px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--flagged);
+  border-radius: 9px;
+}
+
+.confirm p {
+  color: var(--text);
+}
+
+kbd {
+  padding: 2px 7px;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+
+.toast {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 14px;
+  color: #f4f1ea;
+  background: #15181c;
+  border: 1px solid #2e3339;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(21, 24, 28, 0.35);
+}
+
+.toast .link-button {
+  color: #f4f1ea;
+  font-weight: 600;
+}
+
+/* Video notes: links under the title, chapter headings, review mode */
+
+.header-links {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-top: 2px;
+}
+
+.chapter-heading {
+  padding: 16px 0 4px;
+  font-family: "Bricolage Grotesque", "Public Sans", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.review-status {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+/* The note the video has reached. Its timestamp already carries the accent;
+   the row gets a quiet background and an accent edge. */
+.note.current {
+  margin: 0 -8px;
+  padding-left: 5px;
+  padding-right: 8px;
+  background: var(--surface);
+  border-left: 3px solid var(--captured);
+  border-radius: 4px;
+}
+
+.select {
+  padding: 6px 8px;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+/* Top bar buttons, voice settings, note source tags */
+
+.topbar-actions {
+  display: flex;
+  gap: 2px;
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.speech-status {
+  font-weight: 600;
+}
+
+.speech-status.flagged {
+  color: var(--flagged);
+}
+
+/* A short, boring status line, e.g. under the Snip length selects. */
+.hint {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.hint.flagged {
+  color: var(--flagged);
+}
+
+.settings-group .button + .button {
+  margin-left: 6px;
+}
+
+.source-tag {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  vertical-align: 1px;
+}
+
+/* Obsidian settings: a label above each text field. */
+.field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.text-input {
+  padding: 6px 8px;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Kayt launcher foreground. 108dp canvas, artwork inside the 72dp safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <group android:translateX="18" android:translateY="18">
+  <path android:fillColor="#F4F1EA" android:pathData="M6,30 h0 a4,4 0 0 1 4,4 v6 a4,4 0 0 1 -4,4 h-0 a4,4 0 0 1 -4,-4 v-6 a4,4 0 0 1 4,-4 z"/>
+  <path android:fillColor="#2FB89B" android:pathData="M17,17 h0 a4,4 0 0 1 4,4 v32 a4,4 0 0 1 -4,4 h-0 a4,4 0 0 1 -4,-4 v-32 a4,4 0 0 1 4,-4 z"/>
+  <path android:fillColor="#F4F1EA" android:pathData="M28,25 h0 a4,4 0 0 1 4,4 v16 a4,4 0 0 1 -4,4 h-0 a4,4 0 0 1 -4,-4 v-16 a4,4 0 0 1 4,-4 z"/>
+  <path android:fillColor="#F4F1EA" android:pathData="M39,32 h0 a4,4 0 0 1 4,4 v2 a4,4 0 0 1 -4,4 h-0 a4,4 0 0 1 -4,-4 v-2 a4,4 0 0 1 4,-4 z"/>
+  <path android:fillColor="#F4F1EA" android:pathData="M60.65,12.43 L62.61,10.11 A3.8,3.8 0 0 1 68.43,14.99 L66.47,17.32 Z"/>
+  <path android:fillColor="#F4F1EA" android:pathData="M58.94,14.47 L64.76,19.36 L52.31,34.2 L46.49,29.32 Z"/>
+  <path android:fillColor="#2FB89B" android:pathData="M46.49,29.32 L52.31,34.2 L45.77,37.15 a0.91,0.91 0 0 1 -1.05,-0.88 Z"/>
+  </group>
+</vector>
