@@ -240,7 +240,7 @@ const PLAYER_CONTROLS_HEIGHT = 56;
 const TOAST_DURATION_MS = 2500;
 const LONG_TOAST_MS = 5000;
 
-// One-click labels, the same four as the Android app. Each saves a marker.
+// One-click labels. Each saves a marker.
 const QUICK_LABELS = ["Important", "Confusing", "Revisit", "Disagree"];
 
 let host = null;

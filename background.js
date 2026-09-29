@@ -151,12 +151,12 @@ async function saveNote(message, tab) {
     text = "Range";
     source = "MARKER";
   } else if (kind === "label") {
-    // A label on its own is a marker, like the Android app. If something was typed
+    // A label on its own is a marker. If something was typed
     // too, keep it rather than throw it away.
     text = trimmed === "" ? label : label + " — " + trimmed;
     source = trimmed === "" ? "MARKER" : "TEXT";
   } else if (trimmed === "") {
-    // An empty note is a bookmark of the moment, like the Android app.
+    // An empty note is a bookmark of the moment.
     text = "Marked";
     source = "MARKER";
   } else {

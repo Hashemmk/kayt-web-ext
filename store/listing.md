@@ -68,9 +68,7 @@ The side panel:
   you're already on that video's tab, it seeks in place; otherwise it opens the
   video at that time. While the video plays, the note it has reached is highlighted.
 
-Export everything as a plain Markdown file at any time from Settings. The export
-format matches Kayt for Android, so notes from both look the same if you
-keep them side by side (there is no sync between the two — they're independent).
+Export everything as a plain Markdown file at any time from Settings.
 Use Obsidian? "Send to Obsidian" puts a video's notes straight into your vault as a
 note, through the Obsidian app on your computer — nothing is uploaded.
 

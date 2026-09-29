@@ -117,85 +117,128 @@
 <body>
 <main>
   <h1>Kayt for Chrome — Privacy Policy</h1>
-  <p class="meta">Effective date: 27 September 2026. This describes version 1.3 of the extension.</p>
+  <p class="meta">Effective date: 29 September 2026. This describes version 1.3 of the extension.</p>
 
   <div class="card">
-    <strong>In short:</strong> your notes — and, if you choose to keep them, audio
-    recordings of your voice notes — stay on this computer, in this
-    browser. Kayt has no server, no account, and no sync of any kind — including with
-    the Kayt Android app, which is a separate product with its own storage.
+    <strong>In short:</strong> your notes — and, if you choose to keep them, recordings
+    of your own voice notes — stay on this computer, in this browser. Kayt has no
+    server, no account, no sync and no tracking. The sound of the videos you watch is
+    never recorded.
   </div>
 
-  <h2>Your notes stay on this computer</h2>
+  <h2>What Kayt stores, and where</h2>
+  <p>Everything Kayt keeps is stored only in this browser, on this computer:</p>
+  <ul>
+    <li>
+      <strong>Your notes</strong> — their text, the video they belong to, the moment in
+      the video, and the chapter name if the video has chapters — and each video's
+      title, channel name and thumbnail address, in the extension's own storage
+      (<code>chrome.storage.local</code>).
+    </li>
+    <li>
+      <strong>Your settings</strong>, such as look-back times, Snip length, speech
+      language, where you placed the Kayt button, and your Obsidian vault and folder
+      names, in the same storage.
+    </li>
+    <li>
+      <strong>Recordings of your voice notes</strong>, only if "Keep a recording of my
+      voice notes" is turned on in Settings, in this browser's local database
+      (IndexedDB).
+    </li>
+    <li>
+      <strong>Which tab Kayt is listening to</strong>, while it is listening, in memory
+      only (<code>chrome.storage.session</code>). It is gone when Chrome closes.
+    </li>
+  </ul>
   <p>
-    Notes are stored only in this browser's extension storage
-    (<code>chrome.storage.local</code>), on this computer. If you keep "Keep audio"
-    turned on in Settings, audio recordings are stored alongside them, also only on
-    this computer, in this browser's local database (IndexedDB). Nothing is uploaded to
-    any server. The extension has no account system and no cloud sync, and it does not
-    sync with the Kayt Android app or any other device.
+    Nothing is uploaded to any server. Kayt has no account system and no cloud sync, and
+    does not sync with any other device.
   </p>
 
-  <h2>What the extension reads on YouTube</h2>
+  <h2>What Kayt reads on YouTube</h2>
   <p>
-    Kayt only runs on <code>youtube.com</code> and <code>m.youtube.com</code>.
-    When you press a keyboard shortcut or click the Kayt button to add a note, it
-        reads three things from the page at that moment: the video's ID (from the page
-        address), the video's current playback position, and the name of the video's
-        current chapter if it has chapters. It does not read anything else
-    on the page, does not read other tabs, and does not read your browsing history.
+    Kayt only runs on <code>youtube.com</code> and <code>m.youtube.com</code>. Its
+    toolbar icon opens your notes on any site, but it does not read those sites.
+  </p>
+  <p>On YouTube, it reads only what it needs for your notes, and only when you use it:</p>
+  <ul>
+    <li>
+      When you add a note, it reads the video's ID (from the page address), the current
+      playback position, and the current chapter's name if the video has chapters.
+    </li>
+    <li>
+      While a range or a Snip is in progress, it reads the playback position about once a
+      second, to count the time and notice if you move to another video.
+    </li>
+    <li>
+      While the side panel shows the notes of the video you are watching, it reads the
+      playback position about once a second, to highlight the note you have reached.
+    </li>
+  </ul>
+  <p>
+    It does not read anything else on the page, does not read other tabs, and does not
+    read your browsing history. It only changes the player when you ask: clicking a
+    note's time jumps the video there, and a voice note pauses the video while you speak
+    and plays it again afterwards (this can be turned off in Settings).
   </p>
 
   <h2>Voice notes, Snip and listening to a video</h2>
-      <p>
-        Kayt can turn speech into text, and optionally keep a recording of it, in three
-        ways, all only when you ask:
-      </p>
-      <ul>
-        <li>
-          <strong>Voice notes</strong> use your microphone while you speak a note. The
-          microphone is on only from the moment you start a voice note until it is saved,
-          stopped or cancelled.
-        </li>
-        <li>
-          <strong>Listen to video</strong> listens to the sound of the one YouTube tab
-          you turn it on for. A bar on the page and Chrome's own indicator show the whole
-          time it is on. It stops when you turn it off, leave YouTube or close the tab.
-        </li>
-        <li>
-          <strong>Snip</strong> (previously called "Save what was said") saves what the
-          video said just before and/or after the moment you pressed it, as a note.
-          Starting a <strong>range</strong> also listens for the words said during it.
-          If listening isn't already on when you use Snip or start a range, Kayt turns it
-          on by itself for just that Snip or range, and turns it off again once it's
-          done — you'll see this on that Snip's or range's own bar.
-        </li>
-      </ul>
-      <p>
-        In all three cases the speech is recognised <strong>on this computer</strong> by
-        Chrome's built-in on-device speech recognition; Kayt requires on-device mode and
-        refuses to run if Chrome cannot guarantee it. Only recognised words are used to
-        write a note's text.
-      </p>
-      <p>
-        If Settings' <strong>"Keep audio"</strong> is turned on (it is on by default),
-        Kayt also keeps a short audio recording of your microphone alongside a voice
-        note, covering the same stretch of time as the note. These recordings are stored
-        only on this computer, in this browser's local database (IndexedDB) — never
-        uploaded, never sent anywhere. They are deleted automatically when their note is
-        deleted, or when you use "Clear all data", and you can turn "Keep audio" off at
-        any time in Settings so future notes are saved without one.
-      </p>
-      <p>
-        The first time you use a language, Chrome downloads its speech pack from Google.
-        That download is made by Chrome, contains no audio and no notes, and happens
-        once per language.
-      </p>
-
-      <h2>What the extension fetches from the internet</h2>
   <p>
-    The only network requests Kayt makes are to YouTube itself:
+    Kayt can turn speech into text in three ways, each only when you ask for it:
   </p>
+  <ul>
+    <li>
+      <strong>Voice notes</strong> use your microphone while you speak a note. The
+      microphone is on only from the moment you start a voice note until it is saved,
+      stopped or cancelled. The first time, Chrome asks for permission in a small Kayt
+      window; Kayt never asks for the microphone inside YouTube's page, so YouTube itself
+      never gets access to it.
+    </li>
+    <li>
+      <strong>Listen to video</strong> hears the sound of the one YouTube tab you turn
+      it on for, so Kayt can turn what the video says into text. A bar on the page and
+      Chrome's own indicator show the whole time it is on. It stops when you turn it
+      off, leave YouTube or close the tab.
+    </li>
+    <li>
+      <strong>Snip</strong> saves what the video said around the moment you press it —
+      the number of seconds before and after that you choose in Settings — as the text
+      of a note. A <strong>range</strong> likewise saves the words said between its start
+      and its end. If Kayt isn't already listening, a Snip or range turns listening on for
+      itself only, shows it on its own bar, and turns it off again when it is done. Kayt
+      cannot hear anything from before listening was on.
+    </li>
+  </ul>
+  <p>
+    In all three cases the speech is recognised <strong>on this computer</strong> by
+    Chrome's built-in on-device speech recognition. Kayt requires on-device mode and
+    refuses to run if Chrome cannot guarantee it, so your voice and the video's sound are
+    never sent to Google or anyone else for recognition.
+  </p>
+  <p>
+    <strong>The video's sound is never recorded or saved.</strong> While Kayt listens to
+    a video, it keeps only the recognised words, in memory: the last two minutes or so
+    (longer while a range or Snip is waiting for them). They are wiped when listening
+    stops or when you move to another video. Only the words of a Snip or range you save
+    become part of a note.
+  </p>
+  <p>
+    <strong>Recordings of your own voice.</strong> If "Keep a recording of my voice
+    notes" is turned on in Settings (it is on by default), Kayt keeps the microphone
+    recording of each voice note with that note, so you can play it back in the notes
+    panel or download it. Recordings are stored only in this browser and are never
+    uploaded. A recording is deleted when its note is deleted (after a few seconds, so
+    Undo can bring it back) or when you use "Clear all data". You can turn this off in
+    Settings at any time; voice notes are then saved as text only.
+  </p>
+  <p>
+    The first time you use a language, Chrome downloads its speech pack from Google.
+    That download is made by Chrome, contains no audio and no notes, and happens once
+    per language.
+  </p>
+
+  <h2>What Kayt fetches from the internet</h2>
+  <p>The only network requests Kayt makes are to YouTube itself:</p>
   <ul>
     <li>
       A lookup to YouTube's public <strong>oEmbed</strong> service to get a video's
@@ -204,15 +247,36 @@
     </li>
     <li>
       Thumbnail images for videos in your notes list, loaded directly from YouTube's
-      image servers (<code>i.ytimg.com</code>) when the side panel is shown.
+      image servers (<code>i.ytimg.com</code>) when the notes panel is shown.
     </li>
   </ul>
   <p>
     Everything else the extension shows — its code, its icons and the two typefaces it
     is set in — is included in the extension itself, so no fonts or other files are
-    fetched from Google or anyone else while you use it.
+    fetched from Google or anyone else while you use it. No other data is sent anywhere.
   </p>
-  <p>No other data is sent anywhere.</p>
+
+  <h2>Copying, exporting and Obsidian</h2>
+  <p>
+    Your notes only leave Kayt when you move them yourself:
+  </p>
+  <ul>
+    <li>
+      <strong>Copy</strong> puts a note, or a video's notes, on your clipboard.
+    </li>
+    <li>
+      <strong>Export</strong> saves your notes as a Markdown file in your downloads.
+      Voice recordings are not included in the export; you can download one from its
+      note.
+    </li>
+    <li>
+      <strong>Send to Obsidian</strong> puts a video's notes on your clipboard and asks
+      the Obsidian app on this computer to create a note from them. This goes directly
+      from Chrome to the app, with no network request; the notes stay on your clipboard
+      afterwards.
+    </li>
+  </ul>
+  <p>What happens to notes after that is up to you and the app you move them into.</p>
 
   <h2>No tracking</h2>
   <p>
@@ -222,58 +286,65 @@
     inside the extension package you installed.
   </p>
 
-  <h2>Notes are not encrypted at rest</h2>
+  <h2>Notes are not encrypted</h2>
   <p>
-    Unlike the Kayt Android app, which can use the phone's keystore to protect
-    data, ordinary desktop browsers offer no equivalent secure storage that an extension
-    can use. So notes are saved as plain data in your browser's local profile, not
-    encrypted. Anyone with access to this computer's browser profile — for example
-    another person using the same user account — could potentially read them. This is a
-    deliberate, disclosed difference from the Android app, not an oversight.
+    Desktop browsers offer no secure storage that an extension could use to encrypt
+    data with a key hidden from other users of the computer. So notes and voice
+    recordings are saved as plain data in your browser's profile, not encrypted. Anyone
+    with access to this computer's browser profile — for example another person using
+    the same user account — could potentially read them.
   </p>
 
   <h2>Permissions this extension asks for</h2>
   <ul>
-    <li><strong>Storage</strong> — to save your notes locally, using <code>chrome.storage.local</code>.</li>
-    <li><strong>Side panel</strong> — to show your notes list in Chrome's side panel.</li>
-        <li>
-          <strong>Tab capture</strong> — to hear the sound of a YouTube tab when you turn
-          on "Listen to video", use Snip, or start a range, so Kayt can turn what was
-          said into text (and, if "Keep audio" is on, keep a short recording of it).
-          Only the tab you choose, only while listening is on.
-        </li>
-        <li>
-          <strong>Offscreen document</strong> — a hidden Kayt page that does the speech
-          recognition, because Chrome's background part of an extension cannot use a
-          microphone or tab sound itself.
-        </li>
-        <li>
-          <strong>Microphone</strong> — asked by Chrome the first time you take a voice
-          note, not at install. Used for voice notes, and, if "Keep audio" is on, to
-          keep a recording of them alongside the note's text.
-        </li>
+    <li><strong>Storage</strong> — to save your notes and settings in this browser.</li>
+    <li><strong>Side panel</strong> — to show your notes in Chrome's side panel.</li>
     <li>
-      <strong>Access to youtube.com and m.youtube.com</strong> — so the extension can
-      read the current video's ID and playback position when you ask it to, and show the
-      note-capture box on the page.
+      <strong>Tab capture</strong> — to hear the sound of a YouTube tab when you turn on
+      "Listen to video", use Snip, or start a range, so Kayt can turn what was said into
+      text. Only that tab, only while listening is on. The sound is never recorded.
+    </li>
+    <li>
+      <strong>Offscreen document</strong> — a hidden Kayt page that does the speech
+      recognition, because the background part of an extension cannot use a microphone
+      or a tab's sound itself.
+    </li>
+    <li>
+      <strong>Microphone</strong> — asked by Chrome the first time you take a voice
+      note, not at install. Used only for voice notes and, if you keep them, their
+      recordings.
+    </li>
+    <li>
+      <strong>Access to youtube.com and m.youtube.com</strong> — to read the current
+      video's ID and playback position when you use Kayt, show the Kayt button and note
+      box on the page, and look up video titles.
     </li>
   </ul>
-  <p>Kayt does not request access to your other tabs, browsing history, or any site other than YouTube.</p>
+  <p>
+    Kayt does not request access to your other tabs, your browsing history, your
+    downloads, or any site other than YouTube.
+  </p>
 
   <h2>Your control</h2>
   <p>
-    Every note can be exported at any time as a plain Markdown file (audio recordings
-    are not included in the export). All data, including any saved audio recordings,
-    can be permanently deleted from the extension's Settings ("Clear all data"), and
-    deleting a single note deletes its recording too. Your data is also removed
-    automatically if you uninstall the extension.
+    You can edit or delete any note, and deleting a note deletes its recording too. You
+    can export every note at any time. "Clear all data" in Settings permanently deletes
+    all notes and recordings from this browser. Uninstalling the extension also removes
+    all of its data.
   </p>
 
   <h2>No sale or sharing of data</h2>
   <p>
-    Kayt does not sell, rent, or share your notes or any other data with anyone,
-    because it never leaves your browser in the first place — aside from the video ID
-    sent to YouTube's oEmbed service described above.
+    Kayt does not sell, rent, or share your notes or any other data with anyone, because
+    it never leaves your browser in the first place — aside from the video ID sent to
+    YouTube's oEmbed service described above, and anything you copy, export or send to
+    Obsidian yourself.
+  </p>
+
+  <h2>Changes to this policy</h2>
+  <p>
+    If a future version of Kayt changes what it stores or sends, this page will be
+    updated and its effective date changed before that version is published.
   </p>
 
   <h2>Contact</h2>
@@ -283,7 +354,7 @@
 
   <footer>
     Kayt for Chrome is an independent project and is not affiliated with, endorsed
-    by, or sponsored by YouTube or Google.
+    by, or sponsored by YouTube, Google or Obsidian.
   </footer>
 </main>
 </body>
